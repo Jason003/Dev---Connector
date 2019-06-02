@@ -1,0 +1,6 @@
+{
+  "mongoURL": "mongodb://root:ljf4753539@ds263816.mlab.com:63816/dev-connector",
+  "jwtSecret": "3213edcfert245tgvdsft45tgfa",
+  "githubClientId": "c73ee488aa1fed5260c1",
+  "githubSecret": "7a777dc4141d94dfc80fbafbb7d44d1453804c48"
+}
