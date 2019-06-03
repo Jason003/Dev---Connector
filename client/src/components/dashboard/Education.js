@@ -10,6 +10,7 @@ const Education = ({ education, deleteEducation }) => {
     <tr key={edu._id}>
       <td>{edu.school}</td>
       <td className='hide-sm'>{edu.degree}</td>
+      <td className='hide-sm'>{edu.fieldofstudy}</td>
       <td>
         <Moment format='YYYY/MM/DD'>{edu.from}</Moment> -{' '}
         {edu.to === null || edu.current ? (
@@ -21,7 +22,7 @@ const Education = ({ education, deleteEducation }) => {
       <td>
         <Link
           to={{ pathname: '/edit-education', state: edu._id }}
-          className='btn btn-blue'
+          className='btn btn-dark'
         >
           Edit
         </Link>
@@ -43,8 +44,9 @@ const Education = ({ education, deleteEducation }) => {
           <tr>
             <th>School</th>
             <th className='hide-sm'>Degree</th>
+            <th className='hide-sm'>Field of Study</th>
             <th className='hide-sm'>Years</th>
-            <th />
+            <th className='hide-sm'>Operate</th>
           </tr>
         </thead>
         <tbody>{educations}</tbody>

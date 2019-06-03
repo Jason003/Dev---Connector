@@ -9,6 +9,7 @@ const Experience = ({ experience, deleteExperience }) => {
   const experiences = experience.map(exp => (
     <tr key={exp._id}>
       <td>{exp.company}</td>
+      <td className='hide-sm'>{exp.location}</td>
       <td className='hide-sm'>{exp.title}</td>
       <td>
         <Moment format='YYYY/MM/DD'>{exp.from}</Moment> -{' '}
@@ -21,7 +22,7 @@ const Experience = ({ experience, deleteExperience }) => {
       <td>
         <Link
           to={{ pathname: '/edit-experience', state: exp._id }}
-          className='btn btn-blue'
+          className='btn btn-dark'
         >
           Edit
         </Link>
@@ -41,6 +42,7 @@ const Experience = ({ experience, deleteExperience }) => {
         <thead>
           <tr>
             <th>Company</th>
+            <th className='hide-sm'>Location</th>
             <th className='hide-sm'>Title</th>
             <th className='hide-sm'>Years</th>
             <th className='hide-sm'>Operate</th>

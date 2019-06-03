@@ -1,11 +1,11 @@
-import React, { Fragment, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, { Fragment, useState, useEffect } from 'react';
+import { Link, withRouter, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addEducation } from '../../actions/profile';
+import { editEducation } from '../../actions/profile';
 import { setAlert } from '../../actions/alert';
 
-const AddEducation = ({ addEducation, history, setAlert }) => {
+const EditEducation = props => {
   const [formData, setFormData] = useState({
     school: '',
     degree: '',
@@ -15,7 +15,6 @@ const AddEducation = ({ addEducation, history, setAlert }) => {
     current: false,
     description: ''
   });
-
   const [toDateDisabled, toggleDisabled] = useState(false);
 
   const {
@@ -28,25 +27,46 @@ const AddEducation = ({ addEducation, history, setAlert }) => {
     description
   } = formData;
 
+  let education;
+
+  useEffect(() => {
+    if (!education) return;
+    setFormData({
+      school: !education.school ? '' : education.school,
+      degree: !education.degree ? '' : education.degree,
+      fieldofstudy: !education.fieldofstudy ? '' : education.fieldofstudy,
+      from: !education.from ? '' : education.from.substring(0, 10),
+      to: !education.to ? '' : education.to.substring(0, 10),
+      current: !education.current ? false : education.current,
+      description: !education.description ? '' : education.description
+    });
+  }, [education]);
+
+  // get the education to edit
+  const id = props.location.state;
+  const educations = props.education.filter(exp => exp._id === id);
+  if (educations.length === 0) {
+    return <Redirect to='/dashboard' />;
+  }
+  education = educations[0];
+
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Add Your Education</h1>
-      <p className='lead'>
-        <i className='fas fa-code-branch' /> Add any school or bootcamp that you
-        have attended
-      </p>
+      <h1 className='large text-primary'>Edit An Education</h1>
       <small>* = required field</small>
       <form
         className='form'
         onSubmit={e => {
           e.preventDefault();
-          console.log(formData);
-          if (!current && !to) {
-            setAlert("Please enter 'To Date' or check 'Current'", 'danger');
-          } else addEducation(formData, history);
+          if (!current && to === '') {
+            props.setAlert(
+              "Please enter 'To Date' or check 'Current'",
+              'danger'
+            );
+          } else props.editEducation(id, formData, props.history);
         }}
       >
         <div className='form-group'>
@@ -86,7 +106,6 @@ const AddEducation = ({ addEducation, history, setAlert }) => {
             name='from'
             value={from}
             onChange={e => onChange(e)}
-            required
           />
         </div>
         <div className='form-group'>
@@ -133,11 +152,16 @@ const AddEducation = ({ addEducation, history, setAlert }) => {
   );
 };
 
-AddEducation.propTypes = {
-  addEducation: PropTypes.func.isRequired
+EditEducation.propTypes = {
+  editEducation: PropTypes.func.isRequired,
+  education: PropTypes.array.isRequired
+};
+
+const mapStateToProps = ({ profile }) => {
+  return { education: profile.profile ? profile.profile.education : [] };
 };
 
 export default connect(
-  null,
-  { addEducation, setAlert }
-)(withRouter(AddEducation));
+  mapStateToProps,
+  { editEducation, setAlert }
+)(withRouter(EditEducation));

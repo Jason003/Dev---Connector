@@ -10,7 +10,8 @@ const PostItem = ({
   auth,
   addLike,
   removeLike,
-  deletePost
+  deletePost,
+  detailed
 }) => {
   return (
     <div className='post bg-white p-1 my-1'>
@@ -22,7 +23,9 @@ const PostItem = ({
       </div>
       <div>
         <h3>{title}</h3>
-        <p className='my-1'>{text}</p>
+        <p className='my-1'>
+          {detailed ? text : text.substring(0, 200) + '...'}
+        </p>
         <p className='post-date'>
           Posted on <Moment format='YYYY/MM/DD'>{date}</Moment>
         </p>
@@ -41,12 +44,14 @@ const PostItem = ({
         >
           <i className='fas fa-thumbs-down' />{' '}
         </button>
-        <Link to={`post/${_id}`} className='btn btn-primary'>
-          Discussion{' '}
-          {comments.length > 0 && (
-            <span className='comment-count'>{comments.length}</span>
-          )}
-        </Link>
+        {!detailed && (
+          <Link to={`post/${_id}`} className='btn btn-primary'>
+            Discussion{' '}
+            {comments.length > 0 && (
+              <span className='comment-count'>{comments.length}</span>
+            )}
+          </Link>
+        )}
         {!auth.loading && user === auth.user._id && (
           <button
             type='button'
@@ -59,6 +64,10 @@ const PostItem = ({
       </div>
     </div>
   );
+};
+
+PostItem.defaultProps = {
+  detailed: true
 };
 
 PostItem.propTypes = {
