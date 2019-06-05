@@ -15,7 +15,8 @@ const Profile = ({
   match,
   auth: { isAuthenticated, user },
   profile: { profile, loading },
-  getProfileById
+  getProfileById,
+  history
 }) => {
   useEffect(() => {
     getProfileById(match.params.id);
@@ -26,9 +27,9 @@ const Profile = ({
         <Spinner />
       ) : (
         <Fragment>
-          <Link to='/profiles' className='btn btn-light'>
-            Back To Profiles
-          </Link>
+          <button onClick={() => history.goBack()} className='btn btn-light'>
+            Back
+          </button>
           {isAuthenticated && user._id === match.params.id && (
             <Link to='/edit-profile' className='btn btn-dark'>
               Edit Profile

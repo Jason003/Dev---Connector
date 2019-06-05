@@ -28,7 +28,7 @@ const Dashboard = ({
       </p>
       {profile != null ? (
         <Fragment>
-          <DashboardActions />
+          <DashboardActions userId={user._id} />
           <Experience experience={profile.experience} />
           <Education education={profile.education} />
           <Posts userId={user._id} />
