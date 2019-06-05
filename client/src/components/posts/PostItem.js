@@ -14,7 +14,10 @@ const PostItem = ({
   detailed
 }) => {
   return (
-    <div className='post bg-white p-1 my-1'>
+    <div
+      className='post bg-white p-1 my-1'
+      style={{ 'grid-template-columns': '0fr 4fr' }}
+    >
       <div>
         <Link to={`/profile/${user}`}>
           <img className='round-img' src={avatar} alt='' />
@@ -22,7 +25,14 @@ const PostItem = ({
         </Link>
       </div>
       <div>
-        <h3>{title}</h3>
+        {!detailed ? (
+          <Link to={`post/${_id}`}>
+            <h3>{title}</h3>
+          </Link>
+        ) : (
+          <h3>{title}</h3>
+        )}
+
         <p className='my-1'>
           {detailed ? text : text.substring(0, 200) + '...'}
         </p>

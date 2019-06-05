@@ -6,7 +6,9 @@ import {
   UPDATE_LIKES,
   DELETE_POST,
   ADD_COMMENT,
-  REMOVE_COMMENT
+  REMOVE_COMMENT,
+  CLEAR_POST,
+  CLEAR_POSTS
 } from '../actions/type';
 
 const initialState = {
@@ -57,6 +59,10 @@ export default function(state = initialState, action) {
         },
         loading: false
       };
+    case CLEAR_POST:
+      return { ...state, post: null, loading: false };
+    case CLEAR_POSTS:
+      return { ...state, posts: [], loading: false };
     default:
       return state;
   }

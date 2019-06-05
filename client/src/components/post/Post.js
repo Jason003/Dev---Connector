@@ -8,7 +8,7 @@ import PostItem from '../posts/PostItem';
 import CommentForm from './CommentForm';
 import CommentItem from '../post/CommentItem';
 
-const Post = ({ getPostById, match, post: { post, loading } }) => {
+const Post = ({ getPostById, match, post: { post, loading }, history }) => {
   useEffect(() => {
     getPostById(match.params.id);
   }, [getPostById]);
@@ -16,9 +16,9 @@ const Post = ({ getPostById, match, post: { post, loading } }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <Link to='/posts' className='btn'>
-        Back To Posts
-      </Link>
+      <button onClick={() => history.goBack()} className='btn'>
+        Back
+      </button>
       <PostItem post={post} />
       <CommentForm postId={post._id} />
       <div className='comments'>

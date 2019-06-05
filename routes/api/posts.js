@@ -80,6 +80,25 @@ router.get('/:id', auth, async (req, res) => {
   }
 });
 
+// @route    GET api/posts/user/:id
+// @desc     Get posts by userid
+// @access   Private
+router.get('/user/:id', auth, async (req, res) => {
+  try {
+    const post = await Post.find({ user: req.params.id });
+    if (!post) {
+      return res.status(404).json({ msg: 'Posts not found' });
+    }
+    return res.json(post);
+  } catch (err) {
+    console.error(err.message);
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Post not found' });
+    }
+    return res.status(500).send('Server error');
+  }
+});
+
 // @route    DELETE api/posts/:id
 // @desc     Delete a post
 // @access   Private

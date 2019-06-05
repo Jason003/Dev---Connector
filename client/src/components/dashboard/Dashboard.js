@@ -8,6 +8,7 @@ import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import Education from './Education';
+import Posts from './Posts';
 
 const Dashboard = ({
   getCurrentProfile,
@@ -30,6 +31,7 @@ const Dashboard = ({
           <DashboardActions />
           <Experience experience={profile.experience} />
           <Education education={profile.education} />
+          <Posts userId={user._id} />
         </Fragment>
       ) : (
         <Fragment>

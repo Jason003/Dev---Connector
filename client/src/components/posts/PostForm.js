@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addPost } from '../../actions/post';
 
-const PostForm = ({ addPost }) => {
+const PostForm = ({ addPost, history }) => {
   const [formData, setFormData] = useState({
     title: '',
     text: ''
@@ -43,14 +43,19 @@ const PostForm = ({ addPost }) => {
           <textarea
             name='text'
             cols='30'
-            rows='5'
+            rows='15'
             placeholder='Create a post'
             value={text}
             onChange={e => onChange(e)}
             required
           />
         </div>
-        <input type='submit' className='btn btn-dark my-1' value='Submit' />
+        <div>
+          <input type='submit' className='btn btn-dark my-1' value='Submit' />
+          <button onClick={() => history.goBack()} className='btn btn-light'>
+            Back
+          </button>
+        </div>
       </form>
     </div>
   );
