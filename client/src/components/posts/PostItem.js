@@ -13,6 +13,12 @@ const PostItem = ({
   deletePost,
   detailed
 }) => {
+  var liked = false;
+  likes.map(like => {
+    if (like.user === auth.user._id) {
+      liked = true;
+    }
+  });
   return (
     <div
       className='post bg-white p-1 my-1'
@@ -42,18 +48,25 @@ const PostItem = ({
         <button
           type='button'
           className='btn btn-light'
-          onClick={() => addLike(_id)}
+          onClick={() => {
+            if (liked) removeLike(_id);
+            else addLike(_id);
+            liked = !liked;
+          }}
         >
-          <i className='fas fa-thumbs-up' />{' '}
+          <i
+            className='fas fa-thumbs-up'
+            style={liked ? { color: 'teal' } : {}}
+          />{' '}
           <span>{likes.length > 0 && <span>{likes.length}</span>}</span>
         </button>
-        <button
+        {/* <button
           type='button'
           className='btn btn-light'
           onClick={() => removeLike(_id)}
         >
           <i className='fas fa-thumbs-down' />{' '}
-        </button>
+        </button> */}
         {!detailed && (
           <Link to={`post/${_id}`} className='btn btn-primary'>
             Discussion{' '}

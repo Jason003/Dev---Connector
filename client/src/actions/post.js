@@ -8,14 +8,15 @@ import {
   GET_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
-  CLEAR_POSTS
+  CLEAR_POSTS,
+  CLEAR_POST
 } from './type';
 import { setAlert } from './alert';
 
 // Get All Posts
 export const getPosts = () => async dispatch => {
   try {
-    // dispatch({ type: CLEAR_POST });
+    dispatch({ type: CLEAR_POST });
     dispatch({ type: CLEAR_POSTS });
     const res = await axios.get('/api/posts');
     dispatch({
@@ -113,6 +114,12 @@ export const addPost = formData => async dispatch => {
 // Get post by postId
 export const getPostById = id => async dispatch => {
   try {
+    dispatch({
+      type: CLEAR_POSTS
+    });
+    dispatch({
+      type: CLEAR_POST
+    });
     const res = await axios.get(`/api/posts/${id}`);
     dispatch({
       type: GET_POST,
@@ -131,6 +138,9 @@ export const getPostsByUserId = userId => async dispatch => {
   try {
     dispatch({
       type: CLEAR_POSTS
+    });
+    dispatch({
+      type: CLEAR_POST
     });
     const res = await axios.get(`/api/posts/user/${userId}`);
     dispatch({

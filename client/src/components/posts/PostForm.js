@@ -26,6 +26,7 @@ const PostForm = ({ addPost, history }) => {
           e.preventDefault();
           addPost(formData);
           setFormData({ ...formData, title: '', text: '' });
+          history.goBack();
         }}
       >
         <div className='form-group'>
