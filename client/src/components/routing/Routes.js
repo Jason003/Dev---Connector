@@ -16,6 +16,8 @@ import Posts from '../posts/Posts';
 import PostForm from '../posts/PostForm';
 import Post from '../post/Post';
 import NotFound from '../layout/NotFound';
+import ForgotPassword from '../auth/ForgotPassword';
+import ResetPassword from '../auth/ResetPassword';
 import PrivateRoute from '../routing/PrivateRoute';
 
 const Routes = () => {
@@ -25,6 +27,8 @@ const Routes = () => {
       <Switch>
         <Route exact path='/register' component={Register} />
         <Route exact path='/login' component={Login} />
+        <Route exact path='/forgotpassword' component={ForgotPassword} />
+        <Route exact path='/reset-password/:id' component={ResetPassword} />
         <PrivateRoute exact path='/profiles' component={Profiles} />
         <PrivateRoute exact path='/profile/:id' component={Profile} />
         <PrivateRoute exact path='/dashboard' component={Dashboard} />

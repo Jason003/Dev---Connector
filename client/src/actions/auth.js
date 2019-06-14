@@ -96,3 +96,57 @@ export const logout = () => dispatch => {
     type: CLEAR_PROFILE
   });
 };
+
+// Forgot Password
+export const forgotPassword = (email, history) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const body = JSON.stringify({ email });
+  try {
+    const res = await axios.post('/api/auth/forgotpassword', body, config);
+    dispatch(
+      setAlert(
+        `Password reset instruction has been sent to "${email}" if it exists in our system`,
+        'success'
+      )
+    );
+    history.push('/login');
+  } catch (error) {
+    const errors = error.response.data.errors;
+    if (errors) {
+      errors.forEach(error => {
+        dispatch(setAlert(error.msg, 'danger'));
+      });
+    }
+  }
+};
+
+// Reset Password
+export const resetPassword = (
+  resetPasswordLink,
+  password,
+  history
+) => async dispatch => {
+  dispatch(logout());
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const body = JSON.stringify({ resetPasswordLink, newPassword: password });
+  try {
+    const res = await axios.post('/api/auth/resetpassword', body, config);
+    dispatch(setAlert(`Please login with your new password`, 'success'));
+    history.push('/login');
+  } catch (error) {
+    const errors = error.response.data.errors;
+    if (errors) {
+      errors.forEach(error => {
+        dispatch(setAlert(error.msg, 'danger'));
+      });
+    }
+  }
+};

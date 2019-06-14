@@ -1,17 +1,15 @@
 import React, { Fragment, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Redirect, Link } from 'react-router-dom';
+import { forgotPassword } from '../../actions/auth';
+import { connect } from 'react-redux';
 
-import { login } from '../../actions/auth';
-
-const Login = ({ login, isAuthenticated }) => {
+const ForgotPassword = ({ history, forgotPassword, isAuthenticated }) => {
   const [formData, setFormData] = useState({
-    email: '',
-    password: ''
+    email: ''
   });
 
-  const { email, password } = formData;
+  const { email } = formData;
 
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,7 +17,7 @@ const Login = ({ login, isAuthenticated }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    login({ email, password });
+    forgotPassword(email, history);
   };
 
   // Redirect if logged in
@@ -29,9 +27,9 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Log In</h1>
+      <h1 className='large text-primary'>Find Your Password</h1>
       <p className='lead'>
-        <i className='fas fa-user' /> Sign Into Your Account
+        <i className='fas fa-user' /> Enter Your Email
       </p>
       <form
         className='form'
@@ -47,31 +45,17 @@ const Login = ({ login, isAuthenticated }) => {
             onChange={e => onChange(e)}
           />
         </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            minLength='6'
-            value={password}
-            onChange={e => onChange(e)}
-          />
-        </div>
-        <input type='submit' className='btn btn-primary' value='Login' />
+        <input type='submit' className='btn btn-primary' value='Submit' />
       </form>
       <p className='my-1'>
-        Don't have an account? <Link to='/register'>Sign Up</Link>
-      </p>
-      <p className='my-1'>
-        Forgot your password?{' '}
-        <Link to='/forgotpassword'>Find Your Password</Link>
+        <Link onClick={() => history.goBack()}>Back</Link>
       </p>
     </Fragment>
   );
 };
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
+ForgotPassword.propTypes = {
+  forgotPassword: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
 
@@ -81,5 +65,5 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { login }
-)(Login);
+  { forgotPassword }
+)(ForgotPassword);
