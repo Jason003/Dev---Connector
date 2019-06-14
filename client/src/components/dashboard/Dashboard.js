@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { getCurrentProfile } from '../../actions/profile';
+import { forgotPassword } from '../../actions/auth';
 import Spinner from '../layout/Spinner';
 import DashboardActions from './DashboardActions';
 import Experience from './Experience';
@@ -13,7 +14,9 @@ import Posts from './Posts';
 const Dashboard = ({
   getCurrentProfile,
   auth: { user },
-  profile: { profile, loading }
+  profile: { profile, loading },
+  forgotPassword,
+  history
 }) => {
   useEffect(() => {
     getCurrentProfile();
@@ -32,6 +35,14 @@ const Dashboard = ({
           <Experience experience={profile.experience} />
           <Education education={profile.education} />
           <Posts userId={user._id} />
+          <button
+            className='btn btn-dark'
+            onClick={() => {
+              forgotPassword(user.email, history, true);
+            }}
+          >
+            Reset Password
+          </button>
         </Fragment>
       ) : (
         <Fragment>
@@ -50,7 +61,8 @@ const Dashboard = ({
 Dashboard.propTypes = {
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
-  getCurrentProfile: PropTypes.func.isRequired
+  getCurrentProfile: PropTypes.func.isRequired,
+  forgotPassword: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({ auth, profile }) => {
@@ -58,5 +70,5 @@ const mapStateToProps = ({ auth, profile }) => {
 };
 export default connect(
   mapStateToProps,
-  { getCurrentProfile }
+  { getCurrentProfile, forgotPassword }
 )(Dashboard);

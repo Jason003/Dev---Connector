@@ -98,7 +98,11 @@ export const logout = () => dispatch => {
 };
 
 // Forgot Password
-export const forgotPassword = (email, history) => async dispatch => {
+export const forgotPassword = (
+  email,
+  history,
+  isLoggedIn = false
+) => async dispatch => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -113,7 +117,9 @@ export const forgotPassword = (email, history) => async dispatch => {
         'success'
       )
     );
-    history.push('/login');
+    if (!isLoggedIn) {
+      history.push('/login');
+    }
   } catch (error) {
     const errors = error.response.data.errors;
     if (errors) {

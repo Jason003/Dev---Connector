@@ -229,7 +229,7 @@ const EditProfile = ({
             </div>
           </Fragment>
         )}
-        <input type='submit' className='btn btn-primary my-1' />
+        <input type='submit' className='btn btn-primary my-1' value='Submit' />
         <Link className='btn btn-light my-1' onClick={() => history.goBack()}>
           Go Back
         </Link>
