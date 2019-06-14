@@ -14,7 +14,6 @@ Demo: https://dev---connector.herokuapp.com/
 # add uri of your mongodb connection for example
 
  "mongoURI": "mongodb://localhost/dev-social",
-
 ```
 
 ```bash
