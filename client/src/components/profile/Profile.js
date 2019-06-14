@@ -10,6 +10,7 @@ import ProfileAbout from './ProfileAbout';
 import ProfileExperience from './ProfileExperience';
 import ProfileEducation from './ProfileEducation';
 import ProfileGithub from './ProfileGithub';
+import Posts from '../dashboard/Posts';
 
 const Profile = ({
   match,
@@ -35,7 +36,7 @@ const Profile = ({
               Edit Profile
             </Link>
           )}
-          <div className='profile-grid my-1'>
+          <div className='profile-grid my-2'>
             <ProfileTop profile={profile} />
             <ProfileAbout profile={profile} />
             <div className='profile-exp bg-white p-2'>
@@ -73,6 +74,7 @@ const Profile = ({
               <ProfileGithub username={profile.githubusername} />
             )}
           </div>
+          <Posts userId={user._id} />
         </Fragment>
       )}
     </Fragment>

@@ -20,6 +20,8 @@
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.11",
+    "nodemailer": "^6.2.1",
+    "nodemailer-smtp-transport": "^2.7.4",
     "request": "^2.88.0"
   },
   "devDependencies": {
